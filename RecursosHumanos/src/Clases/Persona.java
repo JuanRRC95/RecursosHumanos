@@ -5,11 +5,13 @@
  */
 package Clases;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Juan Rodriguez
  */
-public class Persona {
+public class Persona implements Serializable{
 
     private String nombre;
 
@@ -61,6 +63,16 @@ public class Persona {
         this.cedula = cedula;
     }
 
+    public double getSueldo() {
+        return sueldo;
+    }
+
+    public void setSueldo(double sueldo) {
+        this.sueldo = sueldo;
+    }
+
+    
+    
     //String nombre, String apellido, int edad, double cedula, double sueldo
     @Override
     public String toString() {

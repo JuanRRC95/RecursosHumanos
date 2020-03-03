@@ -5,6 +5,9 @@
  */
 package recursoshumanos;
 
+import Clases.*;
+import Logica.*;
+
 /**
  *
  * @author Juan Rodriguez
@@ -16,6 +19,14 @@ public class RecursosHumanos {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+      // Operario opera = new Operario("Jose","Vargas", 25, 205312, 500000, "Binchador", 24);
+       //Fichero fichero = new Fichero();
+       //fichero.escribirFicheroSerializado(opera);
+       //fichero.imprimir();
+       //Logica logica = new Logica();
+       //logica.imprimirOperarios();
+        Menus menu = new Menus();
+        
     }
     
 }

@@ -16,6 +16,7 @@ import java.util.List;
  */
 public class Logica {
 
+    private Fichero fichero = new Fichero();
     private List<Administrador> listaAdmin = new ArrayList<>();
     private List<Operario> listaOperario = new ArrayList<>();
     private List<Ejecutivo> listaEjecutivo = new ArrayList<>();
@@ -128,14 +129,17 @@ public class Logica {
     }
 
     public void agregarOperario(Operario oper) {
+        fichero.escribirFicheroSerializado(oper);
         listaOperario.add(oper);
     }
 
     public void agregarAdministrador(Administrador admin) {
+        fichero.escribirFicheroSerializado(admin);
         listaAdmin.add(admin);
     }
 
     public void agregarEjecutivo(Ejecutivo ejecutivo) {
+        fichero.escribirFicheroSerializado(ejecutivo);
         listaEjecutivo.add(ejecutivo);
     }
 
@@ -144,11 +148,13 @@ public class Logica {
         double cedula = Double.parseDouble(ced);
         for (Operario oper : listaOperario) {
             if (cedula == oper.getCedula()) {
+                fichero.escribirFicheroSerializadoEditado(oper);
                 listaOperario.remove(oper);
             } else {
                 JOptionPane.showMessageDialog(null, "El registro no exite", "Error", 0);
             }
         }
+
     }
 
     public void eliminarRegistroAdministrador() {
@@ -156,6 +162,7 @@ public class Logica {
         double cedula = Double.parseDouble(ced);
         for (Administrador admin : listaAdmin) {
             if (cedula == admin.getCedula()) {
+                fichero.escribirFicheroSerializadoEditado(admin);
                 listaAdmin.remove(admin);
             } else {
                 JOptionPane.showMessageDialog(null, "El registro no exite", "Error", 0);
@@ -168,6 +175,7 @@ public class Logica {
         double cedula = Double.parseDouble(ced);
         for (Ejecutivo ejec : listaEjecutivo) {
             if (cedula == ejec.getCedula()) {
+                fichero.escribirFicheroSerializadoEditado(ejec);
                 listaEjecutivo.remove(ejec);
             } else {
                 JOptionPane.showMessageDialog(null, "El registro no exite", "Error", 0);
@@ -175,46 +183,80 @@ public class Logica {
         }
     }
 
-    public void buscarRegistro(){
+    public void buscarRegistro() {
         String ced = JOptionPane.showInputDialog("Digite la cedula del empleado");
         double cedula = Double.parseDouble(ced);
-        JOptionPane.showMessageDialog(null,buscarRegistro(cedula));
+        JOptionPane.showMessageDialog(null, buscarRegistro(cedula));
     }
-    
-    
+
     public String buscarRegistro(double cedula) {
-        for (Administrador admin : listaAdmin) {
-            if (cedula == admin.getCedula()) {
-                return admin.toString();
+        List<Object> lista = new ArrayList<>();
+        lista=fichero.traerLista();
+        for (Object obj : lista) {
+            if(obj instanceof Operario){
+                if(cedula==((Operario)obj).getCedula()){
+                    return ((Operario)obj).toString();
+                }
+            }
+            if(obj instanceof Administrador){
+                if(cedula == ((Administrador)obj).getCedula()){
+                    return ((Administrador)obj).toString();
+                }
+            }
+            if(obj instanceof Ejecutivo){
+                if(cedula == ((Ejecutivo)obj).getCedula()){
+                    return ((Ejecutivo)obj).toString();
+                }
             }
         }
-        for (Operario oper : listaOperario) {
-            if (cedula == oper.getCedula()) {
-                return oper.toString();
-            }
-        }
-        for (Ejecutivo ejec : listaEjecutivo) {
-            if (cedula == ejec.getCedula()) {
-                return ejec.toString();
-            }
-        }
+   
         return "El registro no existe";
     }
-    
-    public void imprimirOperarios(){
-        //JOptionPane.showMessageDialog();
-        
-        for (Operario obj : listaOperario) {
-            
+
+    public void imprimirOperarios() {
+        List<Object> lista = new ArrayList<>();
+        lista = fichero.traerLista();
+        Operario oper = null;
+        for (Object obj : lista) {
+            if (obj instanceof Operario) {
+                oper = ((Operario) obj);
+              // JOptionPane.showMessageDialog(null," Nombre: "+oper.getNombre()+" | "+" Apellido: "+oper.getApellido()+" | "+" Edad : "+oper.getEdad()+" | "
+                // +" Cedula : "+oper.getCedula()+" | "+" Salario : "+oper.getSueldo());
+                System.out.println(" Nombre: " + oper.getNombre() + " | " + " Apellido: " + oper.getApellido() + " | " + " Edad : " + oper.getEdad() + " | "
+                        + " Cedula : " + oper.getCedula() + " | " + " Salario : " + oper.getSueldo());
+            }
         }
     }
-    
-    public void imprimirAdministrativos(){
-        
+
+    public void imprimirAdministrativos() {
+        List<Object> lista = new ArrayList<>();
+        Administrador admin = null;
+        lista = fichero.traerLista();
+        for (Object obj : lista) {
+            if (obj instanceof Administrador) {
+                admin = ((Administrador) obj);
+              // JOptionPane.showMessageDialog(null," Nombre: "+oper.getNombre()+" | "+" Apellido: "+oper.getApellido()+" | "+" Edad : "+oper.getEdad()+" | "
+                // +" Cedula : "+oper.getCedula()+" | "+" Salario : "+oper.getSueldo());
+                System.out.println(" Nombre: " + admin.getNombre() + " | " + " Apellido: " + admin.getApellido() + " | " + " Edad : " + admin.getEdad() + " | "
+                        + " Cedula : " + admin.getCedula() + " | " + " Salario : " + admin.getSueldo());
+            }
+        }
     }
-    
-    public void imprimirEjecutivos(){
-        
+
+    public void imprimirEjecutivos() {
+        List<Object> lista = new ArrayList<>();
+        lista = fichero.traerLista();
+        Ejecutivo eject = null;
+        for (Object obj : lista) {
+            if (obj instanceof Operario) {
+                
+                eject = ((Ejecutivo) obj);
+              // JOptionPane.showMessageDialog(null," Nombre: "+oper.getNombre()+" | "+" Apellido: "+oper.getApellido()+" | "+" Edad : "+oper.getEdad()+" | "
+                // +" Cedula : "+oper.getCedula()+" | "+" Salario : "+oper.getSueldo());
+                System.out.println(" Nombre: " + eject.getNombre() + " | " + " Apellido: " + eject.getApellido() + " | " + " Edad : " + eject.getEdad() + " | "
+                        + " Cedula : " + eject.getCedula() + " | " + " Salario : " + eject.getSueldo());
+            }
+        }
     }
 
 }

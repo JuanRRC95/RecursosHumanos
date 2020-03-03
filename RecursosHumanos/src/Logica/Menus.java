@@ -16,7 +16,7 @@ public class Menus {
     private Logica logica = new Logica();
     
     public Menus(){
-        
+        logicaMenuInicial();
     }
     
     
@@ -48,6 +48,15 @@ public class Menus {
         return opc;
     }
     
+    public String graficoMenuImpresion(){
+        String opc = JOptionPane.showInputDialog(
+                  "1. Imprimir Operarios \n"
+                + "2. Imprimir Administradores \n"
+                + "3. Imprimir Ejecutivos \n"
+                + "0. Salir ");
+        return opc;
+    }
+    
     public void logicaMenuInicial(){
         boolean bandera = true;
         while (bandera){
@@ -58,8 +67,8 @@ public class Menus {
                             break;
                     case 2: logicaMenuEliminacion();
                             break;
-                   // case 3: ;
-                   //         break;
+                    case 3: logicaMenuImpresion();
+                            break;
                     case 4: logica.buscarRegistro();
                             break;
                     case 0: bandera = false;
@@ -117,5 +126,27 @@ public class Menus {
         }
     }
     
+    
+    public void logicaMenuImpresion(){
+        boolean bandera = true;
+        while (bandera){
+            try {
+                int op = Integer.parseInt(graficoMenuImpresion());
+                switch (op) {
+                    case 1: logica.imprimirOperarios();
+                            break;
+                    case 2: logica.imprimirAdministrativos();
+                            break;
+                    case 3: logica.imprimirEjecutivos();
+                            break;
+                    case 0: bandera = false;
+                            break;
+                    default: JOptionPane.showInputDialog("No es una opcion valida");
+                }
+            }catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error ingresando los datos", "Error", 0);
+            }
+        }
+    }
     
 }

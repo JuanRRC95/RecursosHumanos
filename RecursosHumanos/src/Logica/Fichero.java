@@ -5,6 +5,7 @@
  */
 package Logica;
 
+import Clases.Operario;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,63 +20,78 @@ import java.util.List;
  * @author Juan Rodriguez
  */
 public class Fichero {
-    
-    
-    public Fichero(){
-        
+
+    public Fichero() {
+
     }
-    
-    public void escribirFicheroSerializado(Object objeto){
+
+    public void escribirFicheroSerializadoEditado(Object objeto) {
         List<Object> lista = new ArrayList<>();
-        lista=traerLista();
-        try(ObjectOutputStream oos=new ObjectOutputStream(new FileOutputStream("fichero.ddr"))){
+        lista = traerLista();
+        lista.remove(objeto);
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("fichero.ddr"))) {
+            for (Object obj : lista) {
+                oos.writeObject(obj);
+            }
+            //           oos.writeObject(obj);
+        } catch (IOException e) {
+        }
+    }
+
+    public void escribirFicheroSerializado(Object objeto) {
+        List<Object> lista = new ArrayList<>();
+        lista = traerLista();
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("fichero.ddr"))) {
             for (Object obj : lista) {
                 oos.writeObject(obj);
             }
             oos.writeObject(objeto);
-        }catch(IOException e){
+        } catch (IOException e) {
         }
     }
-    
-    public List<Object> traerLista(){
+
+    public List<Object> traerLista() {
         List<Object> lista = new ArrayList<>();
-        try(ObjectInputStream ois=new ObjectInputStream(new FileInputStream("fichero.ddr"))){
-           while(true){
-                Object aux=ois.readObject();
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("fichero.ddr"))) {
+            while (true) {
+                Object aux = ois.readObject();
                 lista.add(aux);
             }
-        }catch(ClassNotFoundException e){
-        }catch(EOFException e){
-        }catch(IOException e){
+        } catch (ClassNotFoundException e) {
+        } catch (EOFException e) {
+        } catch (IOException e) {
         }
         return lista;
     }
-    
-    /*
-    public void imprimir(){
-        List<Persona> lista = new ArrayList<>();
-        try(ObjectInputStream ois=new ObjectInputStream(new FileInputStream("fichero.ddr"))){
-            while(true){
+
+    public void imprimir() {
+        List<Object> lista = new ArrayList<>();
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("fichero.ddr"))) {
+            while (true) {
                 Object obj = ois.readObject();
-                if(obj instanceof Persona){
-                    //System.out.println(((Persona)obj).getNombre());
-                    System.out.println("Es una persona");
+                if (obj instanceof Operario) {
+                    System.out.println(((Operario)obj).getNombre());
+                    System.out.println(((Operario)obj).getApellido());
+                    System.out.println(((Operario)obj).getCargoOperario());
+                    System.out.println(((Operario)obj).getCedula());
+                    System.out.println(((Operario)obj).getEdad());
+                   // System.out.println("Es una operario");
                 }//else{
-                  //  if(obj instanceof Empleo){
-                  //      System.out.println(((Empleo)obj).getNombre());
-                 //   }
-               // }
-//                Persona aux=(Persona)ois.readObject();
- //               System.out.println(aux.getNombre());
-                
- //               Empleo aux2 = (Empleo)ois.readObject();
- //               System.out.println(aux2.getNombre());
+                //  if(obj instanceof Empleo){
+                //      System.out.println(((Empleo)obj).getNombre());
+                //   }
+                // }
+                //                Persona aux=(Persona)ois.readObject();
+                //               System.out.println(aux.getNombre());
+
+     //               Empleo aux2 = (Empleo)ois.readObject();
+                //               System.out.println(aux2.getNombre());
             }
-        }catch(ClassNotFoundException e){
-        }catch(EOFException e){
-        }catch(IOException e){
+        } catch (ClassNotFoundException e) {
+        } catch (EOFException e) {
+        } catch (IOException e) {
         }
     }
-    */
-    
+
+
 }
