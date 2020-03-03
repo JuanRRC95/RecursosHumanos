@@ -200,5 +200,21 @@ public class Logica {
         }
         return "El registro no existe";
     }
+    
+    public void imprimirOperarios(){
+        //JOptionPane.showMessageDialog();
+        
+        for (Operario obj : listaOperario) {
+            
+        }
+    }
+    
+    public void imprimirAdministrativos(){
+        
+    }
+    
+    public void imprimirEjecutivos(){
+        
+    }
 
 }
