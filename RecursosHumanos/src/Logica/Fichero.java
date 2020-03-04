@@ -25,15 +25,11 @@ public class Fichero {
 
     }
 
-    public void escribirFicheroSerializadoEditado(Object objeto) {
-        List<Object> lista = new ArrayList<>();
-        lista = traerLista();
-        lista.remove(objeto);
+    public void escribirFicheroSerializadoEditado(List<Object> lista) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("fichero.ddr"))) {
             for (Object obj : lista) {
                 oos.writeObject(obj);
             }
-            //           oos.writeObject(obj);
         } catch (IOException e) {
         }
     }

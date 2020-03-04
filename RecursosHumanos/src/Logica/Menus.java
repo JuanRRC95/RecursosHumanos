@@ -65,7 +65,7 @@ public class Menus {
                 switch (op) {
                     case 1: logicaMenuInsercion();
                             break;
-                    case 2: logicaMenuEliminacion();
+                    case 2: JOptionPane.showMessageDialog(null,logica.eliminarRegistro());
                             break;
                     case 3: logicaMenuImpresion();
                             break;
@@ -110,11 +110,7 @@ public class Menus {
             try {
                 int op = Integer.parseInt(graficoMenuInicial());
                 switch (op) {
-                    case 1: logica.eliminarRegistroOperario();
-                            break;
-                    case 2: logica.eliminarRegistroAdministrador();
-                            break;
-                    case 3: logica.eliminarRegistroEjecutivo();
+                    case 1: JOptionPane.showInputDialog(logica.eliminarRegistro());
                             break;
                     case 0: bandera = false;
                             break;
@@ -145,6 +141,7 @@ public class Menus {
                 }
             }catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Error ingresando los datos", "Error", 0);
+                System.out.println(ex.getMessage());
             }
         }
     }

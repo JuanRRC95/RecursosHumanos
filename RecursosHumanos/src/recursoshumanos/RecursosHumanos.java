@@ -25,6 +25,7 @@ public class RecursosHumanos {
        //fichero.imprimir();
        //Logica logica = new Logica();
        //logica.imprimirOperarios();
+        Logica logica = new Logica();
         Menus menu = new Menus();
         
     }

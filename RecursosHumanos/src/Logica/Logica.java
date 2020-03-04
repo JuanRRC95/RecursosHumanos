@@ -67,9 +67,23 @@ public class Logica {
     };
 
     public Logica() {
-
+        cargarRegistros();
     }
 
+    public void cargarRegistros(){
+        for (Object obj : fichero.traerLista()) {
+            if(obj instanceof Operario){
+                listaOperario.add((Operario)obj);
+            }
+            if(obj instanceof Administrador){
+                listaAdmin.add((Administrador)obj);
+            }
+            if(obj instanceof Ejecutivo){
+                listaEjecutivo.add((Ejecutivo)obj);
+            }   
+        }
+    }
+    
     public void insertarOperario() {
         try {
             String nombre = JOptionPane.showInputDialog("Digite el nombre del operario");
@@ -143,6 +157,41 @@ public class Logica {
         listaEjecutivo.add(ejecutivo);
     }
 
+    public String eliminarRegistro(){
+        String ced = JOptionPane.showInputDialog("Digite la cedula del empleado");
+        double cedula = Double.parseDouble(ced);
+        List<Object> lista = new ArrayList<>();
+        lista=fichero.traerLista();
+        for (Object obj : lista) {
+            if(obj instanceof Operario){
+                if(cedula==((Operario)obj).getCedula()){
+                    lista.remove(obj);
+                    fichero.escribirFicheroSerializadoEditado(lista);
+                    cargarRegistros();
+                    return "El registro con numero de Cedula"+((Operario)obj).getCedula()+"Fue eliminado exitosamente - Ope";
+                }
+            }
+            if(obj instanceof Administrador){
+                if(cedula == ((Administrador)obj).getCedula()){
+                    lista.remove(obj);
+                    fichero.escribirFicheroSerializadoEditado(lista);
+                    cargarRegistros();
+                    return "El registro con numero de Cedula"+((Administrador)obj).getCedula()+"Fue eliminado exitosamente - admin";
+                }
+            }
+            if(obj instanceof Ejecutivo){
+                if(cedula == ((Ejecutivo)obj).getCedula()){
+                    lista.remove(obj);
+                    fichero.escribirFicheroSerializadoEditado(lista);
+                    cargarRegistros();
+                    return "El registro con numero de Cedula"+((Ejecutivo)obj).getCedula()+"Fue eliminado exitosamente - ejecu";
+                }
+            }   
+        }
+        return "El registro no existe";
+    }
+    
+    /*
     public void eliminarRegistroOperario() {
         String ced = JOptionPane.showInputDialog("Digite la cedula del empleado");
         double cedula = Double.parseDouble(ced);
@@ -182,7 +231,7 @@ public class Logica {
             }
         }
     }
-
+*/
     public void buscarRegistro() {
         String ced = JOptionPane.showInputDialog("Digite la cedula del empleado");
         double cedula = Double.parseDouble(ced);
@@ -208,8 +257,7 @@ public class Logica {
                     return ((Ejecutivo)obj).toString();
                 }
             }
-        }
-   
+        }   
         return "El registro no existe";
     }
 
@@ -217,11 +265,13 @@ public class Logica {
         List<Object> lista = new ArrayList<>();
         lista = fichero.traerLista();
         Operario oper = null;
+        limipiarConsola();
+        if(listaOperario.isEmpty()){
+            JOptionPane.showMessageDialog(null,"No hay registros existentes");
+        }
         for (Object obj : lista) {
             if (obj instanceof Operario) {
                 oper = ((Operario) obj);
-              // JOptionPane.showMessageDialog(null," Nombre: "+oper.getNombre()+" | "+" Apellido: "+oper.getApellido()+" | "+" Edad : "+oper.getEdad()+" | "
-                // +" Cedula : "+oper.getCedula()+" | "+" Salario : "+oper.getSueldo());
                 System.out.println(" Nombre: " + oper.getNombre() + " | " + " Apellido: " + oper.getApellido() + " | " + " Edad : " + oper.getEdad() + " | "
                         + " Cedula : " + oper.getCedula() + " | " + " Salario : " + oper.getSueldo());
             }
@@ -232,11 +282,13 @@ public class Logica {
         List<Object> lista = new ArrayList<>();
         Administrador admin = null;
         lista = fichero.traerLista();
+        limipiarConsola();
+        if(listaAdmin.isEmpty()){
+            JOptionPane.showMessageDialog(null,"No hay registros existentes");
+        }
         for (Object obj : lista) {
             if (obj instanceof Administrador) {
                 admin = ((Administrador) obj);
-              // JOptionPane.showMessageDialog(null," Nombre: "+oper.getNombre()+" | "+" Apellido: "+oper.getApellido()+" | "+" Edad : "+oper.getEdad()+" | "
-                // +" Cedula : "+oper.getCedula()+" | "+" Salario : "+oper.getSueldo());
                 System.out.println(" Nombre: " + admin.getNombre() + " | " + " Apellido: " + admin.getApellido() + " | " + " Edad : " + admin.getEdad() + " | "
                         + " Cedula : " + admin.getCedula() + " | " + " Salario : " + admin.getSueldo());
             }
@@ -247,16 +299,23 @@ public class Logica {
         List<Object> lista = new ArrayList<>();
         lista = fichero.traerLista();
         Ejecutivo eject = null;
+        limipiarConsola();
+        if(listaEjecutivo.isEmpty()){
+            JOptionPane.showMessageDialog(null,"No hay registros existentes");
+        }
         for (Object obj : lista) {
-            if (obj instanceof Operario) {
-                
+            if (obj instanceof Ejecutivo) {               
                 eject = ((Ejecutivo) obj);
-              // JOptionPane.showMessageDialog(null," Nombre: "+oper.getNombre()+" | "+" Apellido: "+oper.getApellido()+" | "+" Edad : "+oper.getEdad()+" | "
-                // +" Cedula : "+oper.getCedula()+" | "+" Salario : "+oper.getSueldo());
                 System.out.println(" Nombre: " + eject.getNombre() + " | " + " Apellido: " + eject.getApellido() + " | " + " Edad : " + eject.getEdad() + " | "
                         + " Cedula : " + eject.getCedula() + " | " + " Salario : " + eject.getSueldo());
             }
         }
     }
 
+    public void limipiarConsola(){
+        for(int i=0;i<200;i++){
+            System.out.println("\n");
+        }
+    }
+    
 }
